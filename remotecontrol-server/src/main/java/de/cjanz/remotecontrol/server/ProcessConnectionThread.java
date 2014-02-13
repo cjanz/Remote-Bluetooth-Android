@@ -6,11 +6,16 @@ import java.io.InputStream;
 
 import javax.microedition.io.StreamConnection;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 public class ProcessConnectionThread implements Runnable {
+
+	private static final Logger LOG = LogManager
+			.getLogger(ProcessConnectionThread.class);
 
 	private final StreamConnection mConnection;
 
-	// Constant that indicate command from devices
 	private static final int EXIT_CMD = -1;
 	private static final int KEY_RIGHT = 1;
 	private static final int KEY_LEFT = 2;
@@ -25,20 +30,20 @@ public class ProcessConnectionThread implements Runnable {
 			// prepare to receive data
 			InputStream inputStream = mConnection.openInputStream();
 
-			System.out.println("waiting for input");
+			LOG.info("Waiting for input...");
 
 			while (true) {
 				int command = inputStream.read();
 
 				if (command == EXIT_CMD) {
-					System.out.println("finish process");
+					LOG.info("Finish process");
 					break;
 				}
 
 				processCommand(command);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.error("Error while reading input", e);
 		}
 	}
 
@@ -53,18 +58,18 @@ public class ProcessConnectionThread implements Runnable {
 			Robot robot = new Robot();
 			switch (command) {
 			case KEY_RIGHT:
-				System.out.println("Right");
+				LOG.debug("Right");
 				robot.keyPress(KeyEvent.VK_RIGHT);
 				robot.keyRelease(KeyEvent.VK_RIGHT);
 				break;
 			case KEY_LEFT:
-				System.out.println("Left");
+				LOG.debug("Left");
 				robot.keyPress(KeyEvent.VK_LEFT);
 				robot.keyRelease(KeyEvent.VK_LEFT);
 				break;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.error("Error while executing command", e);
 		}
 	}
 }
