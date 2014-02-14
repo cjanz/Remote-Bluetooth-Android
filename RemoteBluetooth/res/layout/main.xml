@@ -1,7 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    >
-</LinearLayout>
+    android:scrollbars="none"
+    android:layout_weight="1">
+<TableLayout 
+    android:id="@+id/TableLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="top" 
+        android:layout_marginBottom="30dp">
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:text="@string/key_esc" />
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="15dp" >
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:text="@string/key_up" />
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow3"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="15dp" >
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="120dp"
+            android:layout_height="75dp"
+            android:text="@string/key_left"
+            android:onClick="onKey"
+            android:tag="2" />
+        
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:text="@string/key_enter"/>        
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="120dp"
+            android:layout_height="75dp"
+            android:text="@string/key_right"
+            android:onClick="onKey"
+            android:tag="1" />
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal" >
+
+        <Button
+            android:id="@+id/button6"
+            android:layout_width="120dp"
+            android:layout_height="75dp"
+            android:text="@string/key_down" />
+
+    </TableRow>
+</TableLayout>
+</ScrollView>
