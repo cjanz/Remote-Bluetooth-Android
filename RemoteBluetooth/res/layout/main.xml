@@ -12,9 +12,9 @@
 
     <TableRow
         android:id="@+id/tableRow1"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="top" 
+        android:gravity="fill_horizontal" 
         android:layout_marginBottom="30dp">
 
         <Button
@@ -24,6 +24,20 @@
             android:text="@string/key_esc"
             android:onClick="onKey"
             android:tag="27" />
+
+        <android.support.v7.widget.Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        
+       <Button
+            android:id="@+id/button8"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:padding="25dp"
+            android:text="@string/key_f11"
+            android:onClick="onKey"
+            android:tag="122"
+            android:layout_gravity="right" />
 
     </TableRow>
 
