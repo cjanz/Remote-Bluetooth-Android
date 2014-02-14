@@ -182,12 +182,10 @@ public class RemoteControlActivity extends FragmentActivity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
-			connectorFragment.getService()
-					.write(BluetoothCommandService.VOL_UP);
+			connectorFragment.getService().write(39);
 			return true;
 		} else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
-			connectorFragment.getService().write(
-					BluetoothCommandService.VOL_DOWN);
+			connectorFragment.getService().write(37);
 			return true;
 		}
 
