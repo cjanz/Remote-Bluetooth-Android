@@ -3,6 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:scrollbars="none"
+    android:keepScreenOn="true"
     android:layout_weight="1">
 <TableLayout 
     android:id="@+id/TableLayout1"
