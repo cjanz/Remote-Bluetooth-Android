@@ -1,6 +1,7 @@
 package de.cjanz.remotecontrol.android;
 
 import java.util.Locale;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.os.Vibrator;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
@@ -96,6 +98,7 @@ public class RemoteControlActivity extends FragmentActivity {
 	private BluetoothAdapter mBluetoothAdapter;
 	private BluetoothMessageHandler mHandler;
 	private ServiceConnectorFragment connectorFragment;
+	private Vibrator mVibrator;
 	private TextView mStatusText;
 	private View mTimerPanel;
 	private TextView mChronometer;
@@ -124,7 +127,8 @@ public class RemoteControlActivity extends FragmentActivity {
 			finish();
 			return;
 		}
-
+		
+		mVibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 		connectorFragment = setupServiceConnector();
 		mHandler = new BluetoothMessageHandler(getApplicationContext(),
 				mStatusText);
@@ -245,6 +249,7 @@ public class RemoteControlActivity extends FragmentActivity {
 	public void onKey(View view) {
 		connectorFragment.getService().write(
 				Integer.valueOf((String) view.getTag()));
+		mVibrator.vibrate(50);
 	}
 
 	@Override
