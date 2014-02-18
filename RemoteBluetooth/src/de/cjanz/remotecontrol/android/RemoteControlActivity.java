@@ -1,5 +1,7 @@
 package de.cjanz.remotecontrol.android;
 
+import java.util.Locale;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -8,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
@@ -23,6 +26,8 @@ public class RemoteControlActivity extends FragmentActivity {
 
 	private static final int REQUEST_CONNECT_DEVICE = 1;
 	private static final int REQUEST_ENABLE_BT = 2;
+	private static final int TICK_WHAT = 2;
+	private static final String STATE_TIMER_BASE = "STATE_TIMER_BASE";
 
 	public static final class BluetoothMessageHandler extends Handler {
 
@@ -74,11 +79,27 @@ public class RemoteControlActivity extends FragmentActivity {
 			}
 		}
 	}
+	
+	@SuppressLint("HandlerLeak")
+	private Handler mTimerHandler = new Handler() {
+		
+		@Override
+		public void handleMessage(Message msg) {
+			if (mTimerBase > 0) {
+				updateTimerText(SystemClock.elapsedRealtime());
+				sendMessageDelayed(Message.obtain(this, TICK_WHAT), 1000);
+			}
+		}
+		
+	};
 
 	private BluetoothAdapter mBluetoothAdapter;
 	private BluetoothMessageHandler mHandler;
 	private ServiceConnectorFragment connectorFragment;
 	private TextView mStatusText;
+	private View mTimerPanel;
+	private TextView mChronometer;
+	private long mTimerBase = -1;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -92,6 +113,8 @@ public class RemoteControlActivity extends FragmentActivity {
 		mStatusText = (TextView) findViewById(R.id.title_left_text);
 		mStatusText.setText(R.string.app_name);
 		mStatusText = (TextView) findViewById(R.id.title_right_text);
+		mChronometer = (TextView) findViewById(R.id.chronometer);
+		mTimerPanel = findViewById(R.id.timerPanel);
 
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -105,6 +128,9 @@ public class RemoteControlActivity extends FragmentActivity {
 		connectorFragment = setupServiceConnector();
 		mHandler = new BluetoothMessageHandler(getApplicationContext(),
 				mStatusText);
+		if (savedInstanceState != null) {
+			mTimerBase = savedInstanceState.getLong(STATE_TIMER_BASE, -1);
+		}
 	}
 
 	private ServiceConnectorFragment setupServiceConnector() {
@@ -134,6 +160,16 @@ public class RemoteControlActivity extends FragmentActivity {
 
 		mHandler.connectionStateChanged(connectorFragment.getService()
 				.getState(), connectorFragment.getService().getDeviceName());
+		if (mTimerBase > 0) {
+			startTimer(false);
+		}
+	}
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		
+		outState.putLong(STATE_TIMER_BASE, mTimerBase);
 	}
 
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -170,8 +206,40 @@ public class RemoteControlActivity extends FragmentActivity {
 			Intent serverIntent = new Intent(this, DeviceListActivity.class);
 			startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
 			return true;
+		case R.id.startTimer:
+			startTimer(true);
+			return true;
+		case R.id.stopTimer:
+			stopTimer();
+			return true;
 		}
 		return false;
+	}
+
+	private void startTimer(boolean resetBase) {
+		if (resetBase) {
+			mTimerBase = SystemClock.elapsedRealtime();
+		}
+		mTimerPanel.setVisibility(View.VISIBLE);
+		updateTimerText(SystemClock.elapsedRealtime());
+		mTimerHandler.sendMessageDelayed(
+				Message.obtain(mTimerHandler, TICK_WHAT), 1000);
+	}
+
+	private void stopTimer() {
+		mTimerHandler.removeMessages(TICK_WHAT);
+		mTimerBase = -1;
+		mTimerPanel.setVisibility(View.GONE);
+	}	
+
+	private void updateTimerText(long elapsedRealtime) {
+		long duration = elapsedRealtime - mTimerBase;
+		long seconds = duration / 1000;
+		long minutes = seconds / 60;
+		long hours = minutes / 60;
+		
+		String text =String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes % 60, seconds % 60);
+		mChronometer.setText(text);
 	}
 
 	public void onKey(View view) {

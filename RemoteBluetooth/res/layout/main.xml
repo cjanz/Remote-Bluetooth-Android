@@ -1,110 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:scrollbars="none"
-    android:keepScreenOn="true"
-    android:layout_weight="1">
-<TableLayout 
-    android:id="@+id/TableLayout1"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content" >
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 
-    <TableRow
-        android:id="@+id/tableRow1"
+    <ScrollView
         android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:keepScreenOn="true"
+        android:scrollbars="none" >
+
+        <TableLayout
+            android:id="@+id/TableLayout1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <TableRow
+                android:id="@+id/tableRow1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:gravity="fill_horizontal" >
+
+                <Button
+                    android:id="@+id/button1"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:onClick="onKey"
+                    android:tag="27"
+                    android:text="@string/key_esc" />
+
+                <android.support.v7.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/button8"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_gravity="right"
+                    android:onClick="onKey"
+                    android:padding="25dp"
+                    android:tag="122"
+                    android:text="@string/key_f11" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:gravity="center_horizontal" >
+
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:onClick="onKey"
+                    android:tag="38"
+                    android:text="@string/key_up" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow3"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginBottom="15dp"
+                android:gravity="center_horizontal" >
+
+                <Button
+                    android:id="@+id/button3"
+                    android:layout_width="120dp"
+                    android:layout_height="75dp"
+                    android:onClick="onKey"
+                    android:tag="37"
+                    android:text="@string/key_left" />
+
+                <Button
+                    android:id="@+id/button4"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:onClick="onKey"
+                    android:tag="10"
+                    android:text="@string/key_enter" />
+
+                <Button
+                    android:id="@+id/button5"
+                    android:layout_width="120dp"
+                    android:layout_height="75dp"
+                    android:onClick="onKey"
+                    android:tag="39"
+                    android:text="@string/key_right" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal" >
+
+                <Button
+                    android:id="@+id/button6"
+                    android:layout_width="120dp"
+                    android:layout_height="75dp"
+                    android:onClick="onKey"
+                    android:tag="40"
+                    android:text="@string/key_down" />
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/timerPanel"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="fill_horizontal" 
-        android:layout_marginBottom="30dp">
+        android:layout_gravity="bottom|right"
+        android:padding="20dp"
+        android:background="#808080"
+        android:visibility="gone" >
 
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:text="@string/key_esc"
-            android:onClick="onKey"
-            android:tag="27" />
-
-        <android.support.v7.widget.Space
+        <TextView
+            android:id="@+id/chronometer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        
-       <Button
-            android:id="@+id/button8"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:padding="25dp"
-            android:text="@string/key_f11"
-            android:onClick="onKey"
-            android:tag="122"
-            android:layout_gravity="right" />
+    </LinearLayout>
 
-    </TableRow>
-
-    <TableRow
-        android:id="@+id/tableRow2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginBottom="15dp" >
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:text="@string/key_up"
-            android:onClick="onKey"
-            android:tag="38" />
-
-    </TableRow>
-
-    <TableRow
-        android:id="@+id/tableRow3"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-        android:gravity="center_horizontal"
-        android:layout_marginBottom="15dp" >
-
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="120dp"
-            android:layout_height="75dp"
-            android:text="@string/key_left"
-            android:onClick="onKey"
-            android:tag="37" />
-        
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:text="@string/key_enter"
-            android:onClick="onKey"
-            android:tag="10"/>        
-
-        <Button
-            android:id="@+id/button5"
-            android:layout_width="120dp"
-            android:layout_height="75dp"
-            android:text="@string/key_right"
-            android:onClick="onKey"
-            android:tag="39" />
-
-    </TableRow>
-
-    <TableRow
-        android:id="@+id/tableRow4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal" >
-
-        <Button
-            android:id="@+id/button6"
-            android:layout_width="120dp"
-            android:layout_height="75dp"
-            android:text="@string/key_down" 
-            android:onClick="onKey"
-            android:tag="40"/>
-
-    </TableRow>
-</TableLayout>
-</ScrollView>
+</FrameLayout>

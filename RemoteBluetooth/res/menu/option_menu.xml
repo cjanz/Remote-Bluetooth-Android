@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/scan"
-          android:icon="@android:drawable/ic_menu_search"
-          android:title="@string/connect" />
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/scan"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="@string/connect"/>
+    <item
+        android:id="@+id/timerGroup"
+        android:title="@string/timerMenu">
+        <menu>
+            <item
+                android:id="@+id/startTimer"
+                android:title="@string/start_timer"/>
+            <item
+                android:id="@+id/stopTimer"
+                android:title="@string/stop_timer"/>
+        </menu>
+    </item>
+
 </menu>
